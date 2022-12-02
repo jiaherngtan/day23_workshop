@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+</head>
+
+<body>
+    <h1>Order Details:</h1>
+    <p>Order Id: <span th:text="${orderId}"></span></p>
+    <p>Order Date: <span th:text="${orderDate}"></span></p>
+    <p>Customer Id: <span th:text="${customerId}"></span></p>
+    <p>Total price: <span th:text="'$' + ${totalPrice}"></span></p>
+    <hr>
+    <p>Cost Price:</p>
+    <table>
+        <tr>
+            <th>
+                <p>Product Id</p>
+            </th>
+            <th>
+                <p>Product Name</p>
+            </th>
+            <th>
+                <p>Product Quantity</p>
+            </th>
+            <th>
+                <p>Standard Cost</p>
+            </th>
+        </tr>
+        <tr th:each="p : ${products}">
+            <td>
+                <p th:text="${p.productId}"></p>
+            </td>
+            <td>
+                <p th:text="${p.productName}"></p>
+            </td>
+            <td>
+                <p th:text="${p.quantity}"></p>
+            </td>
+            <td>
+                <p th:text="${p.quantity} * ${p.standardCost}"></p>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

@@ -29,17 +29,23 @@ public class OrderController {
     public String getOrderDetails(
             @PathVariable String id,
             Model model) {
-        Order order = orderRepository.getOrderDetails(id);
-        List<Product> products = order.getProducts();
-        int totalPrice = 0;
-        for (Product p : products)
-            totalPrice += p.getQuantity() * p.getUnitPrice() * (100 - p.getDiscount()) / 100;
-        model.addAttribute("orderId", order.getOrderId());
-        model.addAttribute("orderDate", order.getOrderDate());
-        model.addAttribute("customerId", order.getCustomerId());
-        model.addAttribute("totalPrice", totalPrice);
-        model.addAttribute("products", products);
-        return "result";
+
+        try {
+            Order order = orderRepository.getOrderDetails(id);
+            List<Product> products = order.getProducts();
+            int totalPrice = 0;
+            for (Product p : products)
+                totalPrice += p.getQuantity() * p.getUnitPrice() * (100 - p.getDiscount()) / 100;
+            model.addAttribute("orderId", order.getOrderId());
+            model.addAttribute("orderDate", order.getOrderDate());
+            model.addAttribute("customerId", order.getCustomerId());
+            model.addAttribute("totalPrice", totalPrice);
+            model.addAttribute("products", products);
+            return "result";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
     }
 
     @PostMapping(path = "/search")
